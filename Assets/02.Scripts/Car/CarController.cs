@@ -1,25 +1,29 @@
 using System;
 using UnityEngine;
 
-namespace _02.Scripts.Car
+namespace Car
 {
     public class CarController : MonoBehaviour
     {
-        public float speed = 1f;
-        public bool crashed = false;
+        [SerializeField] private float speed = 1f;
+        [SerializeField] private bool crashed = false;
+        [SerializeField] private AudioClip impactAudio;
         
         private Rigidbody rigidbody;
+        private AudioSource audioSource;
 
         private void Awake()
         {
             rigidbody = GetComponent<Rigidbody>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         private void Start()
         {
         }
 
-        private void FixedUpdate() {
+        private void FixedUpdate() 
+        {
             if(!crashed) 
                 rigidbody.velocity = transform.forward * speed;
         }
@@ -30,10 +34,19 @@ namespace _02.Scripts.Car
         
             if (other.gameObject.CompareTag(nameof(Car)))
             {
-                crashed = true;
-                rigidbody.velocity = Vector3.zero;
-                speed = 0;
+                Crash();
             }
+        }
+        
+        private void Crash()
+        {
+            Debug.Log("Car Crash");
+            audioSource.clip = impactAudio;
+            audioSource.loop = false;
+            audioSource.Play();
+            crashed = true;
+            rigidbody.velocity = Vector3.zero;
+            speed = 0;
         }
     }
 }
