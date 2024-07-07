@@ -54,5 +54,8 @@ namespace Phone
         {
             Instantiate(cameraModel, transform.position, transform.rotation);
         }
+        
+        // Phone UI 내에서 사용
+        public void SetVirtualCapturing(bool enable) => virtualCapturing = enable;
     }
 }
