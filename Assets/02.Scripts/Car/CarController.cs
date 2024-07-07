@@ -1,5 +1,8 @@
 using System;
+using Commons.Enums;
+using Manager;
 using UnityEngine;
+using EventBus;
 
 namespace Car
 {
@@ -18,8 +21,14 @@ namespace Car
             audioSource = GetComponent<AudioSource>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
+            EventBus<ScenarioEvent>.Subscribe(ScenarioEvent.Crashed,Crash);
+        }
+
+        private void OnDisable()
+        {
+            EventBus<ScenarioEvent>.Unsubscribe(ScenarioEvent.Crashed,Crash);
         }
 
         private void FixedUpdate() 
@@ -32,9 +41,9 @@ namespace Car
         private void OnCollisionEnter(Collision other)
         {
         
-            if (other.gameObject.CompareTag(nameof(Car)))
+            if (other.gameObject.CompareTag(nameof(Car)) && !crashed)
             {
-                Crash();
+                EventBus<ScenarioEvent>.Publish(ScenarioEvent.Crashed);
             }
         }
         

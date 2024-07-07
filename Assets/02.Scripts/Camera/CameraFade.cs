@@ -38,7 +38,6 @@ public class CameraFade : MonoBehaviour
     }
  
  
-    // Start is called before the first frame update
     void Start()
     {
         if(fadeInOnStart)
@@ -58,20 +57,20 @@ public class CameraFade : MonoBehaviour
     }
  
  
-    public void FadeIn()
+    public void FadeIn(float delaySec = 0f)
     {
         if (isFading)
             return;
  
-        StartCoroutine(BeginFade(fadeColor, fadeOutColor, fadeDuration));
+        StartCoroutine(BeginFade(fadeColor, fadeOutColor, fadeDuration, delaySec));
     }
  
-    public void FadeOut()
+    public void FadeOut(float delaySec = 0f)
     {
         if (isFading)
             return;
  
-        StartCoroutine(BeginFade(fadeOutColor,fadeColor, fadeDuration));
+        StartCoroutine(BeginFade(fadeOutColor,fadeColor, fadeDuration, delaySec));
     }
  
     public IEnumerator BeginFadeOut()
@@ -84,10 +83,11 @@ public class CameraFade : MonoBehaviour
         yield return StartCoroutine(BeginFade(fadeColor, fadeOutColor, fadeDuration));
     }
  
-    private IEnumerator BeginFade(Color startCol, Color endCol , float duration)
+    private IEnumerator BeginFade(Color startCol, Color endCol , float duration,float delaySec = 0f)
     {
         //Start Fade
         isFading = true;
+        yield return new WaitForSeconds(delaySec);
  
         float timer = 0f;
         while(timer <= duration)
