@@ -2,6 +2,7 @@
 {
     public enum ScenarioStage
     {
+        Intro,
         Crash,
         Report,
         Analysis

@@ -38,6 +38,8 @@ namespace Car
             cameraFade.FadeIn(2f);
             Debug.Log($"fade IN");
             phoneActive = true;
+            transform.parent = null;
+
         }
     }
 }

@@ -43,6 +43,7 @@ namespace Car
         
             if (other.gameObject.CompareTag(nameof(Car)) && !crashed)
             {
+                GameManager.Instance.stage = ScenarioStage.Crash;
                 EventBus<ScenarioEvent>.Publish(ScenarioEvent.Crashed);
             }
         }
@@ -56,6 +57,7 @@ namespace Car
             crashed = true;
             rigidbody.velocity = Vector3.zero;
             speed = 0;
+            GameManager.Instance.crashCars.Add(this.gameObject);
         }
     }
 }
