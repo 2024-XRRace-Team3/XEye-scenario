@@ -37,6 +37,7 @@ namespace Car
             transform.position = GameManager.Instance.playerReportPoint.position;
             cameraFade.FadeIn(2f);
             Debug.Log($"fade IN");
+            phoneActive = true;
         }
     }
 }
