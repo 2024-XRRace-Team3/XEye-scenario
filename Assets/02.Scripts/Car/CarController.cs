@@ -8,6 +8,7 @@ namespace Car
 {
     public class CarController : MonoBehaviour
     {
+        public bool isDummy = false; // 더미로 bot Car controller에서는 작동 안하게 처리
         [SerializeField] private float speed = 1f;
         [SerializeField] private bool crashed = false;
         [SerializeField] private AudioClip impactAudio;
@@ -43,8 +44,13 @@ namespace Car
         
             if (other.gameObject.CompareTag(nameof(Car)) && !crashed)
             {
+                ContactPoint contact = other.contacts[0]; // 첫 번째 충돌 지점 가져오기
+                GameObject crashPointObject = new GameObject("Crash_Point");
+                crashPointObject.transform.position = contact.point;
+                GameManager.Instance.crashPoint = crashPointObject.transform;
+                
                 GameManager.Instance.stage = ScenarioStage.Crash;
-                EventBus<ScenarioEvent>.Publish(ScenarioEvent.Crashed);
+                
             }
         }
         
@@ -58,6 +64,8 @@ namespace Car
             rigidbody.velocity = Vector3.zero;
             speed = 0;
             GameManager.Instance.crashCars.Add(this.gameObject);
+            
+            
         }
     }
 }

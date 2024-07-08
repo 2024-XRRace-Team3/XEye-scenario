@@ -11,7 +11,7 @@ namespace Manager {
         public GameObject player;
 
         public new List<GameObject> crashCars;
-        
+        public Transform crashPoint;
         public Transform playerReportPoint;
         [SerializeField]
         private ScenarioStage _stage = ScenarioStage.Intro;
@@ -21,9 +21,13 @@ namespace Manager {
             get => _stage;
             set
             {
+                if (value == _stage) return; // 변경이 없을떄는 호출 되지 않음.
                 switch(value) {
                     case ScenarioStage.Crash:
                         EventBus<ScenarioEvent>.Publish(ScenarioEvent.Crashed);
+                        break;
+                    case ScenarioStage.Analysis:
+                        EventBus<ScenarioStage>.Publish(ScenarioStage.Analysis);
                         break;
                 };
                 _stage = value;

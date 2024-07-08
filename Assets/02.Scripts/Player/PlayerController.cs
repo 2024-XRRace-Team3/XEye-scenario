@@ -21,6 +21,7 @@ namespace Car
         private void OnEnable()
         {
             EventBus<ScenarioEvent>.Subscribe(ScenarioEvent.Crashed,() => StartCoroutine(Crash()));
+            EventBus<ScenarioStage>.Subscribe(ScenarioStage.Analysis,() => StartCoroutine(Analysis()));
         }
 
         void Update()
@@ -39,6 +40,15 @@ namespace Car
             Debug.Log($"fade IN");
             phoneActive = true;
             transform.parent = null;
+            GameManager.Instance.stage = ScenarioStage.Report;
+
+        }
+        IEnumerator Analysis()
+        {
+            cameraFade.FadeOut(2f);
+            yield return new WaitUntil(() => !cameraFade.IsFading);
+            transform.position = GameManager.Instance.playerReportPoint.position;
+            cameraFade.FadeIn(2f);
 
         }
     }

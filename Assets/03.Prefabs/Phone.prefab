@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.10562253, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -405,7 +405,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4453529734219795824
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1366,6 +1366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8773615795603303508}
   - component: {fileID: 8708307211787458775}
+  - component: {fileID: 6141035610704020893}
   m_Layer: 0
   m_Name: Phone
   m_TagString: Untagged
@@ -1401,11 +1402,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1fd8245e70430585ab7603740f26f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAtTarget: {fileID: 0}
   cameraModel: {fileID: 1530636794078900, guid: 92516bda91151814d9916b1f7b7acdfa, type: 3}
-  <isLookStraight>k__BackingField: 0
   virtualCapturing: 0
   virtualCapturingStamp: 3
+  introUi: {fileID: 1371694894991219009}
+  reportUi: {fileID: 9044118947746072364}
+  reportSubmitUi: {fileID: 7739625268449883283}
+  completeUi: {fileID: 2579766249698664675}
+  trackingStateText: {fileID: 4624193391523109714}
+  guideText: {fileID: 4255632938113535860}
+--- !u!114 &6141035610704020893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7487622905131203181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b734263028ce4b05b29a02fdb488d501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  viewThreshold: 0.95
+  accumulatedRotation: 0
+  camera: {fileID: 6257818855201530734}
+  <isLookStraight>k__BackingField: 0
 --- !u!1 &7739625268449883283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,7 +1649,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7930052163405183749
 RectTransform:
   m_ObjectHideFlags: 0
