@@ -34,9 +34,13 @@ namespace Manager {
             }
         }
 
+        [Header("Analysis Resources")] 
+        public Transform playerAnalysticPoint;
+        public GameObject crashModel;
+
         private void Start()
         {
-            // Intro Scenario 
+            crashModel.SetActive(false);
         }
     }
 }
