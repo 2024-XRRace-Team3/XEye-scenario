@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Common.State;
 using Commons.Enums;
@@ -28,6 +29,7 @@ namespace Manager {
                         break;
                     case ScenarioStage.Analysis:
                         EventBus<ScenarioStage>.Publish(ScenarioStage.Analysis);
+                        StartCoroutine(SetAnalysis());
                         break;
                 };
                 _stage = value;
@@ -37,10 +39,24 @@ namespace Manager {
         [Header("Analysis Resources")] 
         public Transform playerAnalysticPoint;
         public GameObject crashModel;
+        public GameObject crashEnvModel;
 
         private void Start()
         {
             crashModel.SetActive(false);
+            crashEnvModel.SetActive(false);
+        }
+
+        private IEnumerator SetAnalysis()
+        {
+            // BAD: 페이드 처리를 위한 대기 코드
+            yield return new WaitForSeconds(2f);
+            
+            RenderSettings.fog = true;
+            RenderSettings.fogColor = Color.black;
+            RenderSettings.fogMode = FogMode.Exponential;
+            RenderSettings.fogDensity = 0.23f;
+            
         }
     }
 }
