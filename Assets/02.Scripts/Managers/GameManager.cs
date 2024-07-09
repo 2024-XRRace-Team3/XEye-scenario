@@ -65,7 +65,11 @@ namespace Manager {
             // RenderSettings.fogDensity = 0.23f;
             RenderSettings.skybox = analysisSkybox;
 
-            realEnv.SetActive(true);
+            realEnv.SetActive(false);
+            analysisEnv.SetActive(true);
+
+            crashModel.SetActive(true);
+            crashEnvModel.SetActive(true);
             
         }
     }
