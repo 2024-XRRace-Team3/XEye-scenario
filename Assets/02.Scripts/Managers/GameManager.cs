@@ -70,6 +70,12 @@ namespace Manager {
 
             crashModel.SetActive(true);
             crashEnvModel.SetActive(true);
+
+            foreach (var obj in crashCars)
+            {
+                obj.SetActive(false);
+                
+            }
             
         }
     }
