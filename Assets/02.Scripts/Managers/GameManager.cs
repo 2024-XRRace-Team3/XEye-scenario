@@ -14,6 +14,9 @@ namespace Manager {
         public new List<GameObject> crashCars;
         public Transform crashPoint;
         public Transform playerReportPoint;
+
+        public GameObject realEnv;
+        
         [SerializeField]
         private ScenarioStage _stage = ScenarioStage.Intro;
 
@@ -40,22 +43,29 @@ namespace Manager {
         public Transform playerAnalysticPoint;
         public GameObject crashModel;
         public GameObject crashEnvModel;
-
+        public GameObject analysisEnv;
+        public Material analysisSkybox;
         private void Start()
         {
             crashModel.SetActive(false);
             crashEnvModel.SetActive(false);
+            
+            realEnv.SetActive(true);
+            analysisEnv.SetActive(false);
         }
 
         private IEnumerator SetAnalysis()
         {
             // BAD: 페이드 처리를 위한 대기 코드
-            yield return new WaitForSeconds(2f);
-            
-            RenderSettings.fog = true;
-            RenderSettings.fogColor = Color.black;
-            RenderSettings.fogMode = FogMode.Exponential;
-            RenderSettings.fogDensity = 0.23f;
+            yield return new WaitForSeconds(4f);
+            //
+            // RenderSettings.fog = true;
+            // RenderSettings.fogColor = Color.black;
+            // RenderSettings.fogMode = FogMode.Exponential;
+            // RenderSettings.fogDensity = 0.23f;
+            RenderSettings.skybox = analysisSkybox;
+
+            realEnv.SetActive(true);
             
         }
     }
