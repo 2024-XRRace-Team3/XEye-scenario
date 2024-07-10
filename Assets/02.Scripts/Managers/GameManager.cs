@@ -5,6 +5,7 @@ using Common.State;
 using Commons.Enums;
 using UnityEngine;
 using EventBus;
+using UnityEngine.UI;
 
 namespace Manager {
     public class GameManager : GenericSingleton<GameManager>
@@ -45,6 +46,8 @@ namespace Manager {
         public GameObject crashEnvModel;
         public GameObject analysisEnv;
         public Material analysisSkybox;
+        public GameObject crash_btn;
+        public GameObject road_btn;
         private void Start()
         {
             crashModel.SetActive(false);
@@ -52,6 +55,18 @@ namespace Manager {
             
             realEnv.SetActive(true);
             analysisEnv.SetActive(false);
+
+            crash_btn.GetComponentInChildren<Toggle>().onValueChanged.AddListener(active =>
+            {
+                Debug.Log($"crashModel : {active}");
+                crashModel.SetActive(active);
+            });
+            
+            road_btn.GetComponentInChildren<Toggle>().onValueChanged.AddListener(active =>
+            {
+                Debug.Log($"crashEnvModel : {active}");
+                crashEnvModel.SetActive(active);
+            });
         }
 
         private IEnumerator SetAnalysis()
