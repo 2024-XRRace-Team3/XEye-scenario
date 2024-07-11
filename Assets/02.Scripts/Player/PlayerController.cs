@@ -9,8 +9,9 @@ namespace Car
     public class PlayerController : MonoBehaviour
     {
         public GameObject phoneObj;
-        public bool phoneActive = false; 
-        
+        public bool phoneActive = false;
+        public GameObject pencil;
+        public bool pencilActive = false;
         public CameraFade cameraFade;
         void Start()
         {
@@ -26,9 +27,9 @@ namespace Car
 
         void Update()
         {
-#if UNITY_EDITOR
+            // BAD CODE
             this.phoneObj.SetActive(phoneActive);
-#endif
+            this.pencil.SetActive(phoneActive);
         }
 
         IEnumerator Crash()
@@ -39,6 +40,7 @@ namespace Car
             cameraFade.FadeIn(2f);
             Debug.Log($"fade IN");
             phoneActive = true;
+            pencilActive = false;
             transform.parent = null;
             GameManager.Instance.stage = ScenarioStage.Report;
 
@@ -49,6 +51,7 @@ namespace Car
             yield return new WaitUntil(() => !cameraFade.IsFading);
             transform.position = GameManager.Instance.playerAnalysticPoint.position;
             cameraFade.FadeIn(2f);
+            pencilActive = true;
             phoneActive = false;
         }
     }
