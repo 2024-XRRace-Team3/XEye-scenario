@@ -29,7 +29,7 @@ namespace Car
         {
             // BAD CODE
             this.phoneObj.SetActive(phoneActive);
-            this.pencil.SetActive(phoneActive);
+            this.pencil.SetActive(pencilActive);
         }
 
         IEnumerator Crash()
