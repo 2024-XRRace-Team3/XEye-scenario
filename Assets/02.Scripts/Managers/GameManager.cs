@@ -6,6 +6,7 @@ using Commons.Enums;
 using UnityEngine;
 using EventBus;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Manager {
     public class GameManager : GenericSingleton<GameManager>
@@ -68,7 +69,13 @@ namespace Manager {
                 crashEnvModel.SetActive(active);
             });
         }
-
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
         private IEnumerator SetAnalysis()
         {
             // BAD: 페이드 처리를 위한 대기 코드
