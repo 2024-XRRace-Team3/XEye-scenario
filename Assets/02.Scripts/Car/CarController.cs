@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Commons.Enums;
 using Manager;
 using UnityEngine;
@@ -16,26 +17,46 @@ namespace Car
         private Rigidbody rigidbody;
         private AudioSource audioSource;
 
+        private float crashedTime;
+        private Vector3 crashedVec;
+        private Quaternion crashedRot;
+        
+        private Vector3 startVec;
+        private Quaternion startRot;
+        private Vector3 originVelocity;
+        private float originSpeed;
+        
+
         private void Awake()
         {
             rigidbody = GetComponent<Rigidbody>();
             audioSource = GetComponent<AudioSource>();
+            startVec = transform.position;
+            startRot = transform.rotation;
+
+            originSpeed = speed;
+            originVelocity = rigidbody.velocity;
         }
 
         private void OnEnable()
         {
             EventBus<ScenarioEvent>.Subscribe(ScenarioEvent.Crashed,Crash);
+            EventBus<ScenarioEvent>.Subscribe(ScenarioEvent.Replay, RePlay);
         }
 
         private void OnDisable()
         {
             EventBus<ScenarioEvent>.Unsubscribe(ScenarioEvent.Crashed,Crash);
+            EventBus<ScenarioEvent>.Unsubscribe(ScenarioEvent.Replay, RePlay);
         }
 
         private void FixedUpdate() 
         {
-            if(!crashed) 
+            if (!crashed)
+            {
+                crashedTime += Time.fixedDeltaTime;
                 rigidbody.velocity = transform.forward * speed;
+            }
         }
         
         
@@ -48,7 +69,6 @@ namespace Car
                 GameObject crashPointObject = new GameObject("Crash_Point");
                 crashPointObject.transform.position = contact.point;
                 GameManager.Instance.crashPoint = crashPointObject.transform;
-                
                 GameManager.Instance.stage = ScenarioStage.Crash;
                 
             }
@@ -56,6 +76,8 @@ namespace Car
         
         private void Crash()
         {
+            crashedVec = transform.position;
+            crashedRot = transform.rotation;
             Debug.Log("Car Crash");
             audioSource.clip = impactAudio;
             audioSource.loop = false;
@@ -67,5 +89,30 @@ namespace Car
             
             
         }
+
+        private void RePlay()
+        {
+            this.gameObject.SetActive(true);
+            GetComponent<MeshesDeformation>().RestoreMesh();
+            StartCoroutine(MoveToTarget(startVec, crashedVec,crashedTime));
+        }
+
+        IEnumerator MoveToTarget(Vector3 startPosition, Vector3 targetPosition, float duration )
+        {
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.fixedDeltaTime;
+                float t = Mathf.Clamp01(elapsedTime / duration);
+                transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+                yield return null;
+            }
+
+            // Ensure the final position is set exactly to the target position
+            transform.position = targetPosition;
+        }
+        
     }
+    
 }

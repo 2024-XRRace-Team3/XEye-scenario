@@ -34,6 +34,10 @@ namespace Car
 
         IEnumerator Crash()
         {
+            if (GameManager.Instance.stage == ScenarioStage.Analysis)
+            {
+                yield break;
+            }
             cameraFade.FadeOut(2f);
             yield return new WaitUntil(() => !cameraFade.IsFading);
             transform.position = GameManager.Instance.playerReportPoint.position;

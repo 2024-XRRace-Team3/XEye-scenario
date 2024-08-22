@@ -49,6 +49,7 @@ namespace Manager {
         public Material analysisSkybox;
         public GameObject crash_btn;
         public GameObject road_btn;
+        public GameObject replay_btn;
         private void Start()
         {
             crashModel.SetActive(false);
@@ -67,6 +68,26 @@ namespace Manager {
             {
                 Debug.Log($"crashEnvModel : {active}");
                 crashEnvModel.SetActive(active);
+            });
+            
+            replay_btn.GetComponentInChildren<Toggle>().onValueChanged.AddListener(active =>
+            {
+                if (active)
+                {
+                    Debug.Log($"Replay");
+                    foreach (var crashCar in crashCars)
+                    {
+                        crashCar.SetActive(true);
+                    }
+                    EventBus<ScenarioEvent>.Publish(ScenarioEvent.Replay);
+                }
+                else
+                {
+                    foreach (var crashCar in crashCars)
+                    {
+                        crashCar.SetActive(false);
+                    }
+                }
             });
         }
         private void Update()

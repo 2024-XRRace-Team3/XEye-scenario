@@ -118,7 +118,7 @@ public class MeshesDeformation : MonoBehaviour
         
     }
 
-    private void RestoreMesh()
+    public void RestoreMesh()
     {
         if (!isRepaired && isRepairing)
         {

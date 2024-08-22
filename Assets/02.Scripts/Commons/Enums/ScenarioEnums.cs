@@ -13,5 +13,6 @@
         Crashed,
         Next,
         Clear,
+        Replay,
     }
 }
