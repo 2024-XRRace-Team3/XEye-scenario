@@ -94,10 +94,10 @@ namespace Car
         {
             this.gameObject.SetActive(true);
             GetComponent<MeshesDeformation>().RestoreMesh();
-            StartCoroutine(MoveToTarget(startVec, crashedVec,crashedTime));
+            StartCoroutine(MoveToTarget(startVec, crashedVec,startRot,crashedRot,crashedTime));
         }
 
-        IEnumerator MoveToTarget(Vector3 startPosition, Vector3 targetPosition, float duration )
+        IEnumerator MoveToTarget(Vector3 startPosition, Vector3 targetPosition, Quaternion startRot, Quaternion targetRot, float duration )
         {
             float elapsedTime = 0f;
 
@@ -106,6 +106,7 @@ namespace Car
                 elapsedTime += Time.fixedDeltaTime;
                 float t = Mathf.Clamp01(elapsedTime / duration);
                 transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+                transform.rotation = Quaternion.Slerp(startRot, targetRot, t);
                 yield return null;
             }
 
